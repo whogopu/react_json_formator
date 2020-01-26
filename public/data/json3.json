@@ -1,0 +1,13 @@
+[
+  "val1",
+  {
+    "obj": {
+      "name": null
+    },
+    "arr": [
+      "val3",
+      "val4"
+    ]
+  },
+  null
+]

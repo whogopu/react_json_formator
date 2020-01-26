@@ -1,8 +1,18 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { getType } from '../utils'
 import Tr from './Tr'
+import './style.css'
 
 const Table = ({ data }) => {
+
+  const [currState, setCurrState] = useState({})
+
+  const onToggle = id => {
+    setCurrState(state => ({
+      ...state,
+      [id]: !Boolean(state[id])
+    }))
+  }
 
   const getTableRows = (data, pKey, hasKeys) => {
 
@@ -18,15 +28,16 @@ const Table = ({ data }) => {
       } = type;
 
       let isPrimitive = isStrNum || isNull || isUndef;
-      let isCollapsed = false
 
       let keyId = k.replace(/\\/g, "\\\\"); // every \ -> \\
       keyId = keyId.replace(/\//g, "\\/");  // every / -> \/
     
       let id = `${pKey === '/' ? '' : pKey}/${keyId}`
      
-      let tr = <Tr isCollapsed={isCollapsed} type={type} id={id} k={k} v={v}/>
-      let trChild = v ? getTableRows(v, id, !isPrimitive) : ''
+      let isExpanded = Boolean(currState[id] || false)
+
+      let tr = <Tr isExpanded={isExpanded} type={type} id={id} k={k} v={v} onToggle={() => onToggle(id)}/>
+      let trChild = v && isExpanded ? getTableRows(v, id, !isPrimitive) : null
       return (
         <Fragment key={id}>
           {tr}

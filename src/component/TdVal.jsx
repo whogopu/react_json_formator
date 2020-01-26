@@ -2,7 +2,7 @@ import React from 'react'
 
 const TdVal = ({
   isPrimitive,
-  isCollapsed,
+  isExpanded,
   type,
   v
 }) => {
@@ -19,14 +19,14 @@ const TdVal = ({
   let cellCls = `treeValueCell ${isPrimitive ? 'string' : isArr ? 'array' : 'object'}Cell`
   let objChld = (
     <span className={cellCls}>
-      {isPrimitive ? v : isArr ? '[...]' : '{...}'}
+      {isPrimitive ? isNull ? 'null' : v : isArr ? '[...]' : '{...}'}
     </span>
   )
 
   let tdVal = (
     <td className={objCls}>
       <span>
-        {(isPrimitive || isCollapsed) ? objChld : ''}
+        {(isPrimitive || !isExpanded) ? objChld : ''}
       </span>
     </td>
   )

@@ -6,6 +6,7 @@ const Tr = ({
   isExpanded,
   onToggle,
   type,
+  level,
   id,
   k,
   v
@@ -21,7 +22,7 @@ const Tr = ({
 
   let isPrimitive = isStrNum || isNull || isUndef;
 
-  let label = <TdKey isPrimitive={isPrimitive} isExpanded={isExpanded} k={k} onToggle={onToggle} />
+  let label = <TdKey isPrimitive={isPrimitive} isExpanded={isExpanded} k={k} onToggle={onToggle} level={level} />
   let value = <TdVal isPrimitive={isPrimitive} isExpanded={isExpanded} type={type} v={v} />
 
   let tds = <Fragment>
@@ -35,8 +36,12 @@ const Tr = ({
 
   let cls = `treeRow ${rowCls} ${childCls} ${collapsedCls}`
 
+  let trs1 = {
+    color: 'rgb(0, 116, 232)'
+  }
+
   let tr = (
-    <tr id={id} className={cls}>
+    <tr id={id} className={cls} data-level={level} style={trs1}>
       {tds}
     </tr>
   )

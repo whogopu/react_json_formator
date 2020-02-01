@@ -6,7 +6,7 @@ const Formator = () => {
   const [data, setData] = useState()
 
   useEffect(() => {
-    getDataFromApi('/data/json3.json')
+    getDataFromApi('/data/json7.json')
       .then(res => setData(res))
   }, [])
 

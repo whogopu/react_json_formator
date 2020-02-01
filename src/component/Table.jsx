@@ -14,7 +14,7 @@ const Table = ({ data }) => {
     }))
   }
 
-  const getTableRows = (data, pKey, hasKeys) => {
+  const getTableRows = (data, pKey, hasKeys, level) => {
 
     let trs = hasKeys && Object.keys(data).map(k => {
       let v = data[k]
@@ -36,8 +36,8 @@ const Table = ({ data }) => {
      
       let isExpanded = Boolean(currState[id] || false)
 
-      let tr = <Tr isExpanded={isExpanded} type={type} id={id} k={k} v={v} onToggle={() => onToggle(id)}/>
-      let trChild = v && isExpanded ? getTableRows(v, id, !isPrimitive) : null
+      let tr = <Tr isExpanded={isExpanded} type={type} id={id} k={k} v={v} onToggle={() => onToggle(id)} level={level}/>
+      let trChild = v && isExpanded ? getTableRows(v, id, !isPrimitive, level+1) : null
       return (
         <Fragment key={id}>
           {tr}
@@ -50,10 +50,21 @@ const Table = ({ data }) => {
     return trs
   }
 
-  let formated = getTableRows(data, '/', true)
+  let formated = getTableRows(data, '/', true, 0)
+
+  let mainStyle = {
+    color: 'rgb(0, 116, 232)',
+    direction: 'ltr',
+    flexBasis: 1,
+    flexGrow: 1,
+    flexShrink: 1,
+    fontSize: 11,
+    overflowY: 'auto',
+    // width: '100%'
+  }
 
   let table = (
-    <table id='main_table'>
+    <table id='main_table' style={mainStyle}>
       <thead></thead>
       <tbody>
         {formated}
